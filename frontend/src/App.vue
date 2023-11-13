@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <div>
+        <p> Регистрация</p>
+    </div>
     <router-view/>
   </div>
 </template>

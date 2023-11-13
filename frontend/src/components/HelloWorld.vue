@@ -1,113 +1,105 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
-  </div>
+  <form @submit.prevent="someAction()">
+    <div class="field">
+      <label for="passport_data">
+        Серия и номер паспорта
+      </label>
+      <input id="passport_data" type="text" v-model="passportData">
+      <div class="error" v-if="$v.passportData.$invalid">
+        Серия и номер паспорта должны быть в формате 1234 567890
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="passport_date">
+        Дата выдачи паспорта
+      </label>
+      <input 
+        id="passport_date" 
+        type="text" 
+        v-model="passportDate" 
+        @blur="$v.passportDate.$touch()"
+      >
+      <div class="error" v-if="$v.passportDate.$error">
+        Дата выдачи паспорта должна быть в формате ДД.ММ.ГГГГ
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="name">Имя</label>
+      <input 
+        id="name" 
+        type="text" 
+        v-model="name" 
+        @blur="$v.name.$touch()"
+      >
+      <div class="error" v-if="$v.name.$error">
+        <template v-if="!$v.name.maxLength">
+          Длина имени не должна превышать {{ $v.name.$params.maxLength.max }} символов
+        </template>
+        <template v-else-if="!$v.name.alpha">
+         Имя должно содержать только буквы
+        </template>
+        <template v-else>
+         Имя обязательно для заполнения
+        </template>
+      </div>
+    </div>
+
+    <button type="submit" :disabled="$v.$invalid">
+      Отправить форму
+    </button>
+  </form>
 </template>
 
 <script>
+import { required, maxLength } from "vuelidate/lib/validators";
+import moment from "moment";
+
 export default {
-  name: 'HelloWorld',
-  data () {
+  name: 'Register',
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
-}
+      passportData: null,
+      name: null,
+      passportDate: null,
+    };
+  },
+
+  validations: {
+    passportData: {
+      required,
+      validFormat: val => /^\d{4} \d{6}$/.test(val),
+    },
+    passportDate: {
+      required,
+      validDate: val => moment(val, "DD.MM.YYYY", true).isValid(),
+    },
+    name: {
+      required,
+      maxLength: maxLength(10),
+      alpha: val => /^[а-яё]*$/i.test(val),
+    },
+  },
+
+  methods: {
+    someAction() {
+      alert('Форма отправлена');
+    },
+  },
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.field {
+  margin-bottom: 24px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.field > label {
+  margin-right: 8px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+.error {
+  color: red;
 }
 </style>
