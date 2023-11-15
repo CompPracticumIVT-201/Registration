@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class RegisterFormRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class RegisterFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -67,5 +69,13 @@ class RegisterFormRequest extends FormRequest
             'authors.exists' => 'Автор не существует',
             'categories.exists' => 'Категория не существует',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'errors'=>$validator->errors(),
+        ], 422));
     }
 }

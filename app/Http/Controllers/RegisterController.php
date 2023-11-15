@@ -3,27 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterFormRequest;
-use App\Models\Author;
 use App\Models\User;
 use App\Models\UserInfo;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Category;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterController extends Controller
 {
     public function store(RegisterFormRequest $request) {
-
-        $validator = Validator::make($request->all());
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'errors'=>$validator->errors()], 422);
-        }
 
         if($request->hasFile('photo')) {
             $path = $request->file('photo')->store('images', 'public');
@@ -54,5 +45,10 @@ class RegisterController extends Controller
         return response()->json([
             'status' => 'success',
             ], 200);
+    }
+
+    protected function failedValidation(FormRequest $request, ValidationException $exception)
+    {
+        throw new ValidationException($exception->validator, new JsonResponse($exception->errors(), 422));
     }
 }
