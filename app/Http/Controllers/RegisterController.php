@@ -15,7 +15,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class RegisterController extends Controller
 {
     public function store(RegisterFormRequest $request) {
-
+        
         if($request->hasFile('photo')) {
             $path = $request->file('photo')->store('images', 'public');
         }
@@ -47,8 +47,7 @@ class RegisterController extends Controller
             ], 200);
     }
 
-    protected function failedValidation(FormRequest $request, ValidationException $exception)
-    {
+    protected function failedValidation(FormRequest $request, ValidationException $exception) {
         throw new ValidationException($exception->validator, new JsonResponse($exception->errors(), 422));
     }
 }

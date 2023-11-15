@@ -33,7 +33,8 @@ class RegisterFormRequest extends FormRequest
             'phone_number' => 'nullable|regex:/(7)[0-9]{10}/|unique:user_infos', // у всех пользователей должен быть разный телефон
             'about' => 'string|nullable',
             'photo' => 'image|mimes:jpeg,jpg,png,svg|max:2048|nullable',
-            'authors' => 'exists:authors,id|nullable',
+            'authors' => 'nullable',
+            'authors.*' => 'exists:authors,id',
             'categories' => 'exists:categories,id|nullable'
         ];
     }
