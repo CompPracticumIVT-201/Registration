@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterFormRequest;
 use App\Models\Author;
 use App\Models\User;
 use App\Models\UserInfo;
@@ -14,21 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    public function store(Request $request) {
-
-        $rules = [
-            'login' => 'required|string|unique:users',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|confirmed|regex:/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?]).*$/',
-            'name' => 'string|nullable',
-            'secondary_name' => 'string|nullable',
-            'birthday' => 'date|nullable',
-            'phone_number' => 'nullable|regex:/(7)[0-9]{10}/|unique:user_infos', // у всех пользователей должен быть разный телефон
-            'about' => 'string|nullable',
-            'photo' => 'image|mimes:jpeg,jpg,png,svg|max:2048|nullable',
-            'authors' => 'exists:authors,id|nullable',
-            'categories' => 'exists:categories,id|nullable'
-        ];
+    public function store(RegisterFormRequest $request) {
         $messages = [
             'login.required' => 'Введите логин!',
             'login.unique' => 'Пользователь с таким логином уже существует!',     // пользовательские ошибки
@@ -54,7 +41,7 @@ class RegisterController extends Controller
             'categories.exists' => 'Категория не существует',
         ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $messages);
 
         if ($validator->fails()) {
             return response()->json([
