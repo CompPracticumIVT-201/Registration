@@ -16,32 +16,8 @@ use Illuminate\Support\Facades\Validator;
 class RegisterController extends Controller
 {
     public function store(RegisterFormRequest $request) {
-        $messages = [
-            'login.required' => 'Введите логин!',
-            'login.unique' => 'Пользователь с таким логином уже существует!',     // пользовательские ошибки
 
-            'email.required' => 'Введите email!',
-            'email.unique' => 'Пользователь с таким email уже существует',
-            'email.email' => 'Введите корректный email',
-
-            'password.required' => 'Введите пароль!',
-            'password.confirmed' => 'Пароли не совпадают!',
-            'password.regex' => 'Пароль должен быть написан латиницей, содержать минимум 8 символов, хотя бы один спец символ, хотя бы одну цифру',
-
-            'name.string' => 'Имя должно быть строкой',
-            'secondary_name.string' => 'Фамилия должна быть строкой',
-            'birthday.date' => 'День рождения должен быть датой',
-            'phone_number.unique' => 'Пользователь с таким номером телефона уже существует!',
-            'phone_number.regex' => 'Телефон должен соответсвовать виду: 7ХХХХХХХХХХ',
-            'about.string' => 'Должно быть строкой',
-            'photo.image' => 'Загржуено не фото',
-            'photo.mimes' => 'Поддерживаемые расширения файлов: jpeg,jpg,png,svg',
-            'photo.max' => 'Размер фото превышает 2 Мб',
-            'authors.exists' => 'Автор не существует',
-            'categories.exists' => 'Категория не существует',
-        ];
-
-        $validator = Validator::make($request->all(), $messages);
+        $validator = Validator::make($request->all());
 
         if ($validator->fails()) {
             return response()->json([
