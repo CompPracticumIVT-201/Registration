@@ -59,7 +59,7 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'errors'=>$validator->errors()]);
+                'errors'=>$validator->errors()], 422);
         }
 
         if($request->hasFile('photo')) {
