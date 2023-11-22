@@ -68,8 +68,8 @@ class RegisterFormRequest extends FormRequest
             'photo.image' => 'Загржуено не фото',
             'photo.mimes' => 'Поддерживаемые расширения файлов: jpeg,jpg,png,svg',
             'photo.max' => 'Размер фото превышает 2 Мб',
-            'authors.exists' => 'Автор не существует',
-            'categories.exists' => 'Категория не существует',
+            'authors.*.exists' => 'Автор не существует',
+            'categories.*.exists' => 'Категория не существует',
         ];
     }
 
