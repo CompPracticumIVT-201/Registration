@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class AuthorController extends Controller
 {
     public function index() {
-        $authors = Author::all()->take(10);
+        $popularAuthors = Author::withCount('users')->orderByDesc('users_count')->limit(10)->get();
 
-        return response()->json($authors);
+        return response()->json($popularAuthors);
     }
 }

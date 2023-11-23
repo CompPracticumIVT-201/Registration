@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VerifyEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/authors', "AuthorController@index")->name('author.index');
 Route::get('/categories', "CategoryController@index")->name('category.index');
 Route::post('/register', "RegisterController@store")->middleware('guest')->name('register.store');
-Route::get('/test', function() { return response()->json(['test' => 'test'], 200);});
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return response()->json(['message' => 'Success verified']);
-})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    ->middleware(['signed'])
+    ->name('verification.verify');

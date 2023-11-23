@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function index() {
-        $categories = Category::all()->take(10);
+        $categories = Category::withCount('users')->orderByDesc('users_count')->limit(10)->get();
 
         return response()->json($categories);
     }
