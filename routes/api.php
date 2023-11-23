@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/authors', "AuthorController@index")->name('author.index');
 Route::get('/categories', "CategoryController@index")->name('category.index');
 Route::post('/register', "RegisterController@store")->middleware('guest')->name('register.store');
+Route::get('/test', function() { return response()->json(['test' => 'test'], 200);});
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
