@@ -12,6 +12,43 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+* @OA\Post(
+     *     path="/api/register",
+     *     summary="Register a new user",
+     *     @OA\Parameter(
+     *         name="login",
+     *         in="query",
+     *         description="Login",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="Email",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Password",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password_confirmation",
+     *         in="query",
+     *         description="Password confirm",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="201", description="User registered successfully"),
+     *     @OA\Response(response="422", description="Validation errors")
+     * )
+     */
+
 class RegisterController extends Controller
 {
     public function store(RegisterFormRequest $request) {
@@ -44,7 +81,7 @@ class RegisterController extends Controller
 
         return response()->json([
             'status' => 'success',
-            ], 200);
+            ], 201);
     }
 
     protected function failedValidation(FormRequest $request, ValidationException $exception) {
