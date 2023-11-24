@@ -1,85 +1,157 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
+<script>
+export default {
+  name: 'App'
+}
+</script>
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div id="app">
+    
+    <div class = "register_form">
+        <div class ="book_part">
+          <div class="home_page_but">
+            <button class = "button" type="button">
+              <img src="./assets/domik.png" alt="Иконка" width="30" height="30">
+            </button>
+          </div>
+          <div class="book_img">
+            <img src="./assets/pngegg_1.png" alt="Иконка" width="554px" height="455px">
+          </div>
+          <div class="lamp_img">
+            <img src="./assets/Lampa.png" alt="Иконка" width="250px" height="395.52px">
+          </div>
+        </div>
+        <div class = "form_part">
+          <p> Регистрация</p>
+          <router-view/>
+        </div>
+        
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
     </div>
-  </header>
+  </div>
 
-  <RouterView />
+
+  <!--<RouterView />-->
 </template>
 
+
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+body{
+  position: absolute;
+  width: 1440px;
+  height: 1200px;
+  left: 0px;
+  top: 0px;
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+  background: #2C2C2C;
+  backdrop-filter: blur(2px);
 }
-
-nav {
-  width: 100%;
-  font-size: 12px;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 2rem;
+  color: #2c3e50;
+  margin-top: 60px;
+
+
+  
 }
+.register_form{
+  position: absolute;
+width: 810px;
+height: 630px;
+left: calc(50% - 810px/2);
+top: calc(50% - 630px/2);
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+background: #F3F2F8;
+box-shadow: 0px 0px 62px 46px rgba(0, 0, 0, 0.15);
+border-radius: 40px;
 }
+.book_part{
+  position: absolute;
+visibility: hidden;
+width: 354px;
+height: 626px;
+left: 0px;
+top: 0px;
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+background: #2C473E;
+border-radius: 40px 0px 0px 40px;
 }
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+.form_part{
+  position: absolute;
+  width: 456px;
+  height: 626px;
+  left: 354px;
+  top: 0px;
 }
+.home_page_but button img{
+  position: absolute;
 
-nav a:first-of-type {
-  border: 0;
+  width: 30px;
+  height: 30px;
+  top: 25px;
+  left: 25px;
+  padding: 0.01px, 0px, 0.01px, 0px;
+  visibility:visible;
 }
+.book_img img{
+  position: absolute;
+  visibility: visible;
+  left: 0px;
+  top:175px;
+  border-radius: 40px;
+}
+.lamp_img img{
+  visibility: visible;
+  position: absolute;
+  width: 291px;
+  height: 330px;
+  left: 166px;
+  top: 0px;
+}
+.form_part p{
+position: absolute;
+width: 196px;
+height: 36px;
+left: 155px;
+margin-top: 0px;
+top: 40px;
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 30px;
+line-height: 36px;
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+font-family: "Inter";
+font-size: 30px;
+font-weight: 700;
+line-height: 36px;
+letter-spacing: 0em;
+text-align: left;
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+color: #353232;
+}
+.form_part form{
+  position: absolute;
+  width: 343px;
+  height: 55.08px;
+  left: 73px;
+  top: 136px;
 }
 </style>
+
+
+
+
+
+
+
