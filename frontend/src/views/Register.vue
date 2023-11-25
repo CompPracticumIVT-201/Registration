@@ -25,7 +25,7 @@
               required,
               maxLength: maxLength(10),
               minLength: minLength(3),
-              beta,
+              login,
             },
             email: {
               required,
@@ -37,7 +37,7 @@
               required,
               maxLength: maxLength(16),
               minLength: minLength(6),
-              beta,
+              pass,
             },
             copy_password: {
               required,
