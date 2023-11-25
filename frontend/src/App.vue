@@ -4,7 +4,11 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  mounted(){
+    // var title = this.$route.name
+    document.title = "Регистрация"
+  },
 }
 </script>
 <template>

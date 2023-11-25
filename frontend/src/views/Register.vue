@@ -46,10 +46,11 @@
           }
         })
         
-
       const v$ = useVuelidate(rules, state);
+      
+      console.log(v$.value.$errors);
 
-      return { state, v$};
+      return { state, v$ };
 
     },
     
@@ -61,12 +62,10 @@
     },
    };
    
-    
-   
    </script>
 
-
 <template>
+    
 
     <form @submit.prevent="someAction()">
       <div class="field form-group">
@@ -169,7 +168,7 @@
         
       </div>
 
-      <button class="button" type="submit" :disabled="v$.$invalid || !state.checkbox  ">
+      <button class="button" type="submit" :disabled="v$.$invalid || !state.checkbox">
         Зарегистрироваться
       </button>
     </form>
