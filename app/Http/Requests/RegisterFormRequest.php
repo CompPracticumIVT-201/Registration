@@ -24,7 +24,7 @@ class RegisterFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login' => 'required|string|unique:users',
+            'login' => 'required|string|min:3|max:10|regex:/^[a-zA-Z0-9_]*$/|unique:users',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|confirmed|regex:/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?]).*$/',
             'name' => 'string|nullable',
@@ -50,6 +50,9 @@ class RegisterFormRequest extends FormRequest
         return [
             'login.required' => 'Введите логин!',
             'login.unique' => 'Пользователь с таким логином уже существует!',
+            'login.min' => 'Логин меньше 3 символов!',
+            'login.max' => 'Логин длиннее 10 символов!',
+            'login.regex' => 'Логин может содержать символы латинского алфавита, цифры и знак подчёркивания "_"!',
 
             'email.required' => 'Введите email!',
             'email.unique' => 'Пользователь с таким email уже существует',

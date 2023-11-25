@@ -16,7 +16,8 @@
           checkbox: '',
         })
 
-        const beta = (value) =>  /^[a-zA-Z0-9_-]*$/i.test(value)
+        const login = (value) =>  /^[a-zA-Z0-9_]*$/i.test(value)
+        const pass = (value) =>  /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?]).*$/i.test(value)
 
         const rules = computed(() => {
           return {
@@ -40,7 +41,7 @@
             },
             copy_password: {
               required,
-              sameAsPassword: sameAs('password')
+              sameAsPassword: sameAs(state.password)
             },
           }
         })
@@ -48,7 +49,7 @@
 
       const v$ = useVuelidate(rules, state);
 
-      return { state, v$}
+      return { state, v$};
 
     },
     
@@ -168,7 +169,7 @@
         
       </div>
 
-      <button class="button" type="submit" :disabled="v$.$invalid || !checkbox  ">
+      <button class="button" type="submit" :disabled="v$.$invalid || !state.checkbox  ">
         Зарегистрироваться
       </button>
     </form>
