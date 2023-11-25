@@ -16,6 +16,7 @@ use Illuminate\Foundation\Http\FormRequest;
 * @OA\Post(
      *     path="/api/register",
      *     summary="Register a new user",
+     *     tags={"Registration"},
      *     @OA\Parameter(
      *         name="login",
      *         in="query",
@@ -43,6 +44,62 @@ use Illuminate\Foundation\Http\FormRequest;
      *         description="Password confirm",
      *         required=true,
      *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Name",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="secondary_name",
+     *         in="query",
+     *         description="Secondary name",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="birthday",
+     *         in="query",
+     *         description="Birthday",
+     *         required=false,
+     *         @OA\Schema(type="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="phone_number",
+     *         in="query",
+     *         description="Phone number",
+     *         required=false,
+     *         @OA\Schema(type="phone")
+     *     ),
+     *     @OA\Parameter(
+     *         name="about",
+     *         in="query",
+     *         description="About",
+     *         required=false,
+     *         @OA\Schema(type="text")
+     *     ),
+     *     @OA\Parameter(
+     *         name="photo",
+     *         in="query",
+     *         description="Photo",
+     *         required=false,
+     *         @OA\Schema(type="file")
+     *     ),
+     *     @OA\Parameter(
+     *         name="authors[]",
+     *         in="query",
+     *         description="Authors ids",
+     *         required=false,
+     *         @OA\Schema(type="array", @OA\Items(type="int")),
+     *     ),
+     *     @OA\Parameter(
+     *         name="categories[]",
+     *         in="query",
+     *         description="Category ids",
+     *         required=false,
+     *         @OA\Schema(type="array", @OA\Items(type="int")),
      *     ),
      *     @OA\Response(response="201", description="User registered successfully"),
      *     @OA\Response(response="422", description="Validation errors")

@@ -8,8 +8,16 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *    title="Swagger with Laravel",
+ *    title="Registration APi",
  *    version="1.0.0",
+ *    @OA\Contact(
+ *      name= "API Support",
+ *      email= "datsiiak@yandex.ru",
+ *      ),
+ * )
+ * @OA\Tag(
+ *    name="Registration",
+ *    description="API Endpoints of project"
  * )
 
  */

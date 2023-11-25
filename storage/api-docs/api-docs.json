@@ -1,12 +1,67 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Swagger with Laravel",
+        "title": "Registration APi",
+        "contact": {
+            "name": "API Support",
+            "email": "datsiiak@yandex.ru"
+        },
         "version": "1.0.0"
     },
     "paths": {
+        "/api/authors": {
+            "get": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Get 10 popular authors",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "List of 10 authors",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Author"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Get 10 popular category",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "List of 10 categories",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Category"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/register": {
             "post": {
+                "tags": [
+                    "Registration"
+                ],
                 "summary": "Register a new user",
                 "parameters": [
                     {
@@ -44,6 +99,84 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "secondary_name",
+                        "in": "query",
+                        "description": "Secondary name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "birthday",
+                        "in": "query",
+                        "description": "Birthday",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "query",
+                        "description": "Phone number",
+                        "required": false,
+                        "schema": {
+                            "type": "phone"
+                        }
+                    },
+                    {
+                        "name": "about",
+                        "in": "query",
+                        "description": "About",
+                        "required": false,
+                        "schema": {
+                            "type": "text"
+                        }
+                    },
+                    {
+                        "name": "photo",
+                        "in": "query",
+                        "description": "Photo",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    {
+                        "name": "authors[]",
+                        "in": "query",
+                        "description": "Authors ids",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "int"
+                            }
+                        }
+                    },
+                    {
+                        "name": "categories[]",
+                        "in": "query",
+                        "description": "Category ids",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "int"
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -56,5 +189,154 @@
                 }
             }
         }
-    }
+    },
+    "components": {
+        "schemas": {
+            "Author": {
+                "properties": {
+                    "id": {
+                        "description": "Author unique id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "description": "Author name",
+                        "type": "string",
+                        "example": "Roderick"
+                    },
+                    "secondary_name": {
+                        "description": "Author secondary name",
+                        "type": "string",
+                        "example": "Ruecker"
+                    },
+                    "surname": {
+                        "description": "Author surname",
+                        "type": "string",
+                        "example": "Abbott"
+                    },
+                    "birthday": {
+                        "description": "Author birthday",
+                        "type": "date-time",
+                        "example": "1963-05-15 14:32:00"
+                    },
+                    "day_death": {
+                        "description": "Author day death",
+                        "type": "date-time",
+                        "example": "2012-11-16 17:15:00"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Author"
+                }
+            },
+            "Category": {
+                "properties": {
+                    "id": {
+                        "description": "Category unique id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "description": "Category description",
+                        "type": "string",
+                        "example": "Ut tempora voluptatem et est"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Category"
+                }
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "description": "User unique id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "login": {
+                        "description": "User unique login",
+                        "type": "string",
+                        "example": "Quisquam"
+                    },
+                    "email": {
+                        "description": "User unique email address",
+                        "type": "string",
+                        "format": "email",
+                        "example": "user@gmail.com"
+                    },
+                    "email_verified_at": {
+                        "description": "Datetime marker of verification status",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2019-02-25 12:59:20"
+                    },
+                    "password": {
+                        "description": "User password hashed",
+                        "type": "string",
+                        "example": "$2y$10$/6nto87YdxOHTONClwIlwOPeqWSLvehquDKajllyU9Qq8CJS67crW"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "UserInfo": {
+                "properties": {
+                    "id": {
+                        "description": "UserInfo unique id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "description": "User name",
+                        "type": "string",
+                        "example": "Hanna"
+                    },
+                    "secondary_name": {
+                        "description": "User secondary name",
+                        "type": "string",
+                        "example": "Ruecker"
+                    },
+                    "birthday": {
+                        "description": "Author birthday",
+                        "type": "date-time",
+                        "example": "1963-05-15 14:32:00"
+                    },
+                    "phone_number": {
+                        "description": "User phone number",
+                        "type": "integer",
+                        "example": "18784620214"
+                    },
+                    "about": {
+                        "description": "User about",
+                        "type": "string",
+                        "example": "Dolorum et aut optio esse. Laboriosam qui dolor sunt eos asperiores unde. Ullam voluptatem doloribus aut soluta eligendi. Eius molestiae qui tempora quis provident"
+                    },
+                    "photo": {
+                        "description": "User photo link in server",
+                        "type": "string",
+                        "example": "images/6JncLoEVFsiGJd1wZ2bw6a0rzOVmP8BOiSnUakCe.jpg"
+                    },
+                    "user_id": {
+                        "description": "User unique id",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserInfo"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Registration",
+            "description": "API Endpoints of project"
+        }
+    ]
 }
