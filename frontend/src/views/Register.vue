@@ -8,6 +8,7 @@
 
    export default {
     //login: 'Register',
+    
     setup(){
       const state = reactive({
         email: '',
@@ -53,7 +54,22 @@
    
     methods: {
       async register() {
+        const user = {
+          email: this.state.email,
+          login: this.state.login,
+          password: this.state.password,
+          password_confirmation: this.state.copy_password,
+        };
         
+        axios
+          .post('/register', user)
+          .then(response => {
+            console.log (response.data.status);
+          })
+          .catch((e) => {
+            if( e.response.status == 422 )
+              console.log(e.response.data.errors);
+          })
       },
       async checkLoginExist() {},
       async checkEmailExist() {},
