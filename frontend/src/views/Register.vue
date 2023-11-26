@@ -3,62 +3,70 @@
    import {useVuelidate} from '@vuelidate/core'
    import { required, maxLength, minLength, email, sameAs } from '@vuelidate/validators'
    //import moment from "moment";
+   import axios from 'axios'
 
 
    export default {
     //login: 'Register',
-      setup(){
-        const state = reactive({
-          email: '',
-          login: '',
-          password: '',
-          copy_password: '',
-          checkbox: '',
-        })
+    setup(){
+      const state = reactive({
+        email: '',
+        login: '',
+        password: '',
+        copy_password: '',
+        checkbox: '',
+      })
 
-        const login = (value) =>  /^[a-zA-Z0-9_]*$/i.test(value)
-        const pass = (value) =>  /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?]).*$/i.test(value)
+      const login = (value) =>  /^[a-zA-Z0-9_]*$/i.test(value)
+      const pass = (value) =>  /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?]).*$/i.test(value)
 
-        const rules = computed(() => {
-          return {
-            login: {
-              required,
-              maxLength: maxLength(10),
-              minLength: minLength(3),
-              login,
-            },
-            email: {
-              required,
-              maxLength,
-              minLength,
-              email,
-            },
-            password: {
-              required,
-              maxLength: maxLength(16),
-              minLength: minLength(6),
-              pass,
-            },
-            copy_password: {
-              required,
-              sameAsPassword: sameAs(state.password)
-            },
-          }
-        })
-        
-      const v$ = useVuelidate(rules, state);
+      const rules = computed(() => {
+        return {
+          login: {
+            required,
+            maxLength: maxLength(10),
+            minLength: minLength(3),
+            login,
+          },
+          email: {
+            required,
+            email,
+          },
+          password: {
+            required,
+            maxLength: maxLength(16),
+            minLength: minLength(6),
+            pass,
+          },
+          copy_password: {
+            required,
+            sameAsPassword: sameAs(state.password)
+          },
+        }
+      })
       
-      console.log(v$.value.$errors);
+      const v$ = useVuelidate(rules, state);
 
       return { state, v$ };
-
     },
     
    
     methods: {
-     someAction() {
-      alert('Форма отправлена');
-     },
+      async register() {
+        
+      },
+      async checkLoginExist() {},
+      async checkEmailExist() {},
+      async getAuthors() {
+        axios
+          .get('/authors')
+          .then(response => {return response.data})
+      },
+      async getCategories() {
+        axios
+          .get('/categories')
+          .then(response => {return response.data})
+      },
     },
    };
    
@@ -67,7 +75,7 @@
 <template>
     
 
-    <form @submit.prevent="someAction()">
+    <form @submit.prevent="register()">
       <div class="field form-group">
         <label for="login">Логин</label>
         <input placeholder="Придумайте логин" class="form-control"
@@ -77,22 +85,23 @@
           @blur="v$.login.$touch()"
         />
         <div class="error" v-if="v$.login.$error">
-          <template v-if="!v$.login.maxLength">
-            Длина логина не должна превышать {{ v$.login.$params.maxLength.max }} символов
+
+          <template v-if="v$.login.maxLength.$invalid">
+            Длина логина не должна превышать {{ v$.login.maxLength.$params.max }} символов
           </template>
-          <template v-else-if="!v$.login.minLength">
-            Длина логина должна быть не менее {{ v$.login.$params.minLength.min }} символов
+          <template v-else-if="v$.login.minLength.$invalid">
+            Длина логина должна быть не менее {{ v$.login.minLength.$params.min }} символов
           </template>
-          <template v-else-if="!v$.login.beta">
-           Логин должен содержать только латиницу, может содержать цифры и символы "_","-"
+          <template v-else-if="v$.login.login.$invalid">
+           Логин должен содержать только латиницу, может содержать цифры и символ "_"
           </template>
-          <template v-else-if="!v$.login.required">
+          <template v-else-if="v$.login.required.$invalid">
            Логин обязателен для заполнения
           </template>
-
           <template v-else>
             Неопознанная ошибка
           </template>
+
         </div>
       </div>
   
@@ -105,16 +114,17 @@
           @blur="v$.email.$touch()"
         />
         <div class="error" v-if="v$.email.$error">
-          <template v-if="!v$.email.email">
-            Почта должна быть валидна
-          </template>
-          <template v-else-if="!v$.email.required">
-           Заполните поле почты
-          </template>
 
+          <template v-if="v$.email.email.$invalid">
+            Почта некорректна, пример: example@test.com
+          </template>
+          <template v-else-if="v$.email.required.$invalid">
+            Заполните поле почты
+          </template>
           <template v-else>
             Неопознанная ошибка
           </template>
+
         </div>
       </div>
 
@@ -127,10 +137,10 @@
           @blur="v$.password.$touch()"
         />
         <div class="error" v-if="v$.password.$error">
-          <template v-if="!v$.password.required">
+          <template v-if="v$.password.required.$invalid">
             Заполните поле пароля
           </template>
-          <template v-else>
+          <template v-else-if="v$.password.pass.$invalid">
            Пароль не соответствует требованиям
           </template>
         </div>
@@ -145,10 +155,10 @@
           @blur="v$.copy_password.$touch()"
         />
         <div class="error" v-if="v$.copy_password.$error">
-        <template v-if="!v$.copy_password.required">
+        <template v-if="v$.copy_password.required.$invalid">
            Подтвердите пароль
           </template>
-          <template v-else-if="!v$.copy_password.sameAsPassword">
+          <template v-else-if="v$.copy_password.sameAsPassword.$invalid">
             Пароли не совпадают
           </template>
           <template v-else>
