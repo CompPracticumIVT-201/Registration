@@ -19,7 +19,7 @@
       })
 
       const login = (value) =>  /^[a-zA-Z0-9_]*$/i.test(value)
-      const pass = (value) =>  /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?]).*$/i.test(value)
+      const pass = (value) =>  /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?\(\)_-]).*$/i.test(value)
 
       const rules = computed(() => {
         return {
@@ -67,8 +67,10 @@
             console.log (response.data.status);
           })
           .catch((e) => {
-            if( e.response.status == 422 )
-              errors_serv$ = e.response.data.errors;
+            if( e.response.status == 422 ) {
+              // errors_serv$ = e.response.data.errors;
+              console.log(e.response.data);
+            }
           })
       },
       async checkLoginExist() {},
