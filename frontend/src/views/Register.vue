@@ -68,7 +68,7 @@
           })
           .catch((e) => {
             if( e.response.status == 422 )
-              console.log(e.response.data.errors);
+              errors_serv$ = e.response.data.errors;
           })
       },
       async checkLoginExist() {},
@@ -101,7 +101,6 @@
           @blur="v$.login.$touch()"
         />
         <div class="error" v-if="v$.login.$error">
-
           <template v-if="v$.login.maxLength.$invalid">
             Длина логина не должна превышать {{ v$.login.maxLength.$params.max }} символов
           </template>
