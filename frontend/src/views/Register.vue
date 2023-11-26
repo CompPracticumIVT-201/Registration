@@ -145,7 +145,7 @@
 
       <div class="field form-group">
         <label for="password">Пароль</label>
-        <input placeholder="Придумайте свой пароль" class="form-control"
+        <input placeholder="Придумайте пароль" class="form-control"
           id="password" 
           type="password" 
           v-model.trim="state.password" 
@@ -163,9 +163,10 @@
 
       <div class="field form-group" style ="margin-bottom: 10px;">
         <label for="copy_password">Подтвердите пароль</label>
-        <input placeholder="Подтвердите свой пароль" class="form-control"
+        <input placeholder="Подтвердите пароль" class= "form-control"
           id="copy_password" 
-          type="password" 
+          type="password"
+          
           v-model.trim="state.copy_password" 
           @blur="v$.copy_password.$touch()"
         />
@@ -207,9 +208,9 @@
   
   <style scoped>
 
-  
+
   .field {
-    margin-bottom: 23px;
+    margin-bottom: 25px;
     position: relative;
     height: 55.08px;
 
@@ -218,10 +219,10 @@
   .field > label {
     position: absolute;
     height: 19px;
-    left: 14px;
-    top: 0px;
+    left: 30px;
+    top: -3px;
 
-    font-family: 'Inter';
+    font-family: Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -252,17 +253,16 @@
 
   .checkbox{
     position: absolute;
-    top:10px;
-    left: 14px;
+    top: 10px;
+    left: 30px;
 
     width: 15px;
     height: 15px;
 
-  
-
     background: #EDEDED;
     border: 0.5px solid #DBDBDB;
     border-radius: 2px;
+
 
   }
 
@@ -272,10 +272,10 @@
     width: 300px;
     height: 12px;
 
-    top: 7px;
-    left: 20px;
+    top: 15px;
+    left: 45px;
 
-    font-family: 'Inter';
+    font-family: Arial, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
@@ -284,8 +284,10 @@
     color: #365B76;
   }
   .checkbox_field > input{
-    top: 0px;
+    top: 9px;
+    cursor: pointer; 
   }
+
 
 
   .form-group > input::placeholder{
@@ -295,7 +297,7 @@
     top: 6.31px;
     left: 15px;
 
-    font-family: Inter;
+    font-family: Arial, sans-serif;
     font-size: 11px;
     font-weight: 300;
     line-height: 13px;
@@ -309,11 +311,11 @@
     position: absolute;
     color: #FC3030;
 
-    left: 15px;
-    top: 50px;
-
+    left: 30px;
+    top: 53px;
     height: 12px;
-    font-family: Inter;
+    
+    font-family: Arial, sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 12px;
@@ -324,19 +326,31 @@
   .button{
     position: absolute;
     top: 397px;
-    left: 37px;
+    left: 45px;
     width: 271px;
     height: 40px;
 
     background: #365B76;
     border-radius: 45px;
 
-    font-family: 'Inter';
+    font-family: Arial, sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
-    color: #FFFFFF;
-
+    color: #F3F2F8;
   }
+  button:hover {
+    border: 1px solid #365B76;
+    background-color: #538bb3;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  button:disabled,
+  button[disabled]{
+  border: 1px solid #365B76;
+  background-color: #cccccc;
+  color: #666666;
+  }
+    
   </style>
