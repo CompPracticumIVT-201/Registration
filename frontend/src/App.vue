@@ -19,24 +19,23 @@ export default {
       <div class= "bgElepseLeftBottom"></div>
       <div class= "bgElepseLeftTop"></div>
       <div class= "bgElepseRightBottom"></div>
+
       <div class = "register_form">
-          <div class ="book_part">
-            
-              <button class = "buttonHome" type= "submit">
-                
-              </button>
-            
-            <div class= "book_img">
-              <img src= "./assets/pngegg_1.png" alt= "Иконка" width= "554px" height= "455px">
-            </div>
-            <div class= "lamp_img">
-              <img src= "./assets/Lampa.png" alt= "Иконка" width= "250px" height= "395.52px">
-            </div>
+        <div class ="book_part">
+          <button class = "buttonHome" type= "submit"></button>
+          
+          <div class= "book_img">
+            <img src= "./assets/pngegg_1.png" alt= "Иконка" width= "554px" height= "455px">
           </div>
-          <div class = "form_part">
-            <p> Регистрация</p>
-            <router-view/>
+
+          <div class= "lamp_img">
+            <img src= "./assets/Lampa.png" alt= "Иконка" width= "250px" height= "395.52px">
           </div>
+        </div>
+        <div class = "form_part">
+          <p> Регистрация</p>
+          <router-view/>
+        </div>
       </div> 
     </div>
   </div>
@@ -104,13 +103,12 @@ export default {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 6px;
-  z-index: 3;
 }
 .register_form{
   position: absolute;
@@ -140,6 +138,7 @@ export default {
   height: 626px;
   left: 354px;
   top: 0px;
+  
 }
 .buttonHome{
   position: absolute;

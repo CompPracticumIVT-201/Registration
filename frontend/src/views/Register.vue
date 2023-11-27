@@ -145,7 +145,7 @@
 
       <div class="field form-group">
         <label for="password">Пароль</label>
-        <input placeholder="Придумайте пароль" class="form-control"
+        <input placeholder="Придумайте свой пароль" class="form-control"
           id="password" 
           type="password" 
           v-model.trim="state.password" 
@@ -163,7 +163,7 @@
 
       <div class="field form-group" style ="margin-bottom: 10px;">
         <label for="copy_password">Подтвердите пароль</label>
-        <input placeholder="Подтвердите пароль" class= "form-control"
+        <input placeholder="Подтвердите свой пароль" class= "form-control"
           id="copy_password" 
           type="password"
           
@@ -194,18 +194,17 @@
         
       </div>
 
-      <button class="button" type="submit" :disabled="v$.$invalid || !state.checkbox">
+      <button class="buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
         Зарегистрироваться
+      </button>
+      <button class="buttonLogIn" type="submit" :disabled="v$.$invalid || !state.checkbox">
+        Уже есть аккаунт? Войти
       </button>
     </form>
   </template>
   
 
 
-  
-   
-  
-  
   <style scoped>
 
 
@@ -220,9 +219,9 @@
     position: absolute;
     height: 19px;
     left: 30px;
-    top: -3px;
+    top: -23px;
 
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -232,14 +231,14 @@
   }
   .form-group > input {
     position: absolute;
-    height: 27.08px;
+    height: 32px;
     width: 343px;
-    top:20px;
+    top: 0px;
     left: 14px;
 
     background: #F3F2F8;
-    border: 1px solid #AF895B;
-    border-radius: 12px;
+    border: 2px solid #AF895B;
+    border-radius: 15px;
     box-sizing: border-box;
   }
 
@@ -251,53 +250,75 @@
     padding-left: 15px;
 }
 
+
+
+
+
+
+
+
   .checkbox{
-    position: absolute;
-    top: 10px;
-    left: 30px;
+    position:absolute;
+    left: 25px;
+    top: -6px;
 
-    width: 15px;
-    height: 15px;
+    -webkit-appearance: none; /* Remove default appearance */
+    -moz-appearance: none;
+    appearance: none;
 
-    background: #EDEDED;
-    border: 0.5px solid #DBDBDB;
-    border-radius: 2px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #AF895B;
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.3s ease-in-out;
 
+    cursor: pointer;
+  }
+
+  .checkbox:checked::before {
+    content: '\2714'; /* check mark symbol Unicode */
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    line-height: 16px;
+    color: #365B76;
+  }
+
+  .checkbox:checked{
+    background-color: #F3F2F8;  /* Change background color when checked */
 
   }
 
 
   .checkbox_field > label{
     position: absolute;
-    width: 300px;
+    width: 315px;
     height: 12px;
 
-    top: 15px;
+    top: 1px;
     left: 45px;
 
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 10.5px;
     line-height: 12px;
 
     color: #365B76;
   }
-  .checkbox_field > input{
-    top: 9px;
-    cursor: pointer; 
-  }
-
+  
 
 
   .form-group > input::placeholder{
     position: absolute;
-    width: 128px;
-    height: 14.9px;
-    top: 6.31px;
-    left: 15px;
+    width: 135px;
+    left: 4.37%;
+    right: 58.31%;
+    top: 32.14%;
+    bottom: 21.43%;
 
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;
     font-size: 11px;
     font-weight: 300;
     line-height: 13px;
@@ -312,45 +333,70 @@
     color: #FC3030;
 
     left: 30px;
-    top: 53px;
+    top: 39px;
     height: 12px;
     
-    font-family: Arial, sans-serif;
-    font-size: 14px;
+    font-family: sans-serif;
+    font-size: 12px;
     font-weight: 400;
     line-height: 12px;
     letter-spacing: 0em;
     text-align: left;
 
   }
-  .button{
+  .buttonReg{
     position: absolute;
-    top: 397px;
+    top: 345px;
     left: 45px;
     width: 271px;
     height: 40px;
-
+    border: none;
     background: #365B76;
     border-radius: 45px;
 
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
     color: #F3F2F8;
   }
-  button:hover {
+  .buttonReg:hover {
     border: 1px solid #365B76;
-    background-color: #538bb3;
+    background-color: #3e6886;
     padding: 5px 10px;
     cursor: pointer;
   }
-  button:disabled,
-  button[disabled]{
-  border: 1px solid #365B76;
+  .buttonReg:disabled,
+  .buttonReg[disabled]{
+  border: 2px solid #365B76;
   background-color: #cccccc;
   color: #666666;
+  }
+
+
+  .buttonLogIn{
+    position: absolute;
+    top: 410px;
+    left: 45px;
+    width: 271px;
+    height: 40px;
+    border: none;
+    background: #AF895B;
+    border-radius: 45px;
+    
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #F3F2F8;
+  }
+  .buttonLogIn:hover {
+    border: 2px solid #AF895B;
+    background-color: #bd9462;
+    padding: 5px 10px;
+    cursor: pointer;
   }
     
   </style>
