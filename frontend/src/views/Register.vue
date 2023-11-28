@@ -1,7 +1,7 @@
 <script>
    import {reactive, computed} from 'vue'
    import {useVuelidate} from '@vuelidate/core'
-   import { required, maxLength, minLength, email, sameAs } from '@vuelidate/validators'
+   import { required, maxLength, minLength, email, sameAs, helpers } from '@vuelidate/validators'
    //import moment from "moment";
    import axios from 'axios'
 
@@ -18,30 +18,34 @@
         checkbox: '',
       })
 
-      const login = (value) =>  /^[a-zA-Z0-9_]*$/i.test(value)
-      const pass = (value) =>  /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?\(\)_-]).*$/i.test(value)
+      const login_reg = helpers.regex(/^[a-zA-Z]*$/)
+      const pass = helpers.regex(/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?\(\)_-]).*$/)
+      const latin = helpers.regex(/^.*(?=[a-zA-Z]).*$/)
+      const has_int = helpers.regex(/^.*(?=.*\d).*$/)
+      const has_spec = helpers.regex(/^.*(?=.*[!@#$%^&*"?\(\)_-]).*$/)
 
       const rules = computed(() => {
         return {
           login: {
-            required,
-            maxLength: maxLength(10),
-            minLength: minLength(3),
-            login,
+            required : helpers.withMessage('Введите логин!', required),
+            maxLength: helpers.withMessage('Длина логина должна быть не более 10 символов', maxLength(10)),
+            minLength: helpers.withMessage('Длина логина должна быть не менее 3 символов', minLength(3)),
+            reg : helpers.withMessage('Логин должен содержать только латиницу, может содержать цифры и символ "_"', login_reg),
           },
           email: {
-            required,
-            email,
+            required : helpers.withMessage('Введите почту!', required),
+            email : helpers.withMessage('Введите корректную почту!', email),
           },
           password: {
-            required,
-            maxLength: maxLength(16),
-            minLength: minLength(6),
-            pass,
+            required : helpers.withMessage('Введите пароль!', required),
+            latin : helpers.withMessage('Пароль должен быть набран латиницей!', latin),
+            minLength : helpers.withMessage('Пароль должен содержать минимум 8 символов!', minLength(8)),
+            has_int : helpers.withMessage('Пароль должен содержать хотя бы 1 цифру!', has_int),
+            has_spec : helpers.withMessage('Пароль должен содержать хотя бы 1 спец символ!', has_spec),
           },
           copy_password: {
-            required,
-            sameAsPassword: sameAs(state.password)
+            required : helpers.withMessage('Подтвердите пароль!', required),
+            sameAsPassword : helpers.withMessage('Пароли должны совпадать!', sameAs(state.password)),
           },
         }
       })
@@ -103,22 +107,9 @@
           @blur="v$.login.$touch()"
         />
         <div class="error" v-if="v$.login.$error">
-          <template v-if="v$.login.maxLength.$invalid">
-            Длина логина не должна превышать {{ v$.login.maxLength.$params.max }} символов
-          </template>
-          <template v-else-if="v$.login.minLength.$invalid">
-            Длина логина должна быть не менее {{ v$.login.minLength.$params.min }} символов
-          </template>
-          <template v-else-if="v$.login.login.$invalid">
-           Логин должен содержать только латиницу, может содержать цифры и символ "_"
-          </template>
-          <template v-else-if="v$.login.required.$invalid">
-           Логин обязателен для заполнения
-          </template>
-          <template v-else>
-            Неопознанная ошибка
-          </template>
-
+          <div> 
+            {{ v$.login.$errors[0].$message }} 
+          </div>
         </div>
       </div>
   
@@ -131,17 +122,9 @@
           @blur="v$.email.$touch()"
         />
         <div class="error" v-if="v$.email.$error">
-
-          <template v-if="v$.email.email.$invalid">
-            Почта некорректна, пример: example@test.com
-          </template>
-          <template v-else-if="v$.email.required.$invalid">
-            Заполните поле почты
-          </template>
-          <template v-else>
-            Неопознанная ошибка
-          </template>
-
+          <div> 
+            {{ v$.email.$errors[0].$message }} 
+          </div>
         </div>
       </div>
 
@@ -154,12 +137,9 @@
           @blur="v$.password.$touch()"
         />
         <div class="error" v-if="v$.password.$error">
-          <template v-if="v$.password.required.$invalid">
-            Заполните поле пароля
-          </template>
-          <template v-else-if="v$.password.pass.$invalid">
-           Пароль не соответствует требованиям
-          </template>
+          <div>
+            {{ v$.password.$errors[0].$message }}
+          </div>
         </div>
       </div>
 
@@ -172,15 +152,9 @@
           @blur="v$.copy_password.$touch()"
         />
         <div class="error" v-if="v$.copy_password.$error">
-        <template v-if="v$.copy_password.required.$invalid">
-           Подтвердите пароль
-          </template>
-          <template v-else-if="v$.copy_password.sameAsPassword.$invalid">
-            Пароли не совпадают
-          </template>
-          <template v-else>
-           Неопознанная ошибка
-          </template>
+          <div> 
+            {{ v$.copy_password.$errors[0].$message }} 
+          </div>
         </div>
       </div>
 
