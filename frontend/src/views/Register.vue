@@ -2,9 +2,12 @@
    import {reactive, computed} from 'vue'
    import {useVuelidate} from '@vuelidate/core'
    import { required, maxLength, minLength, email, sameAs, helpers } from '@vuelidate/validators'
+   //import moment from "moment";
    import axios from 'axios'
 
+
    export default {
+    //login: 'Register',
     
     setup(){
 
@@ -78,6 +81,7 @@
           })
           .catch((e) => {
             if( e.response.status == 422 ) {
+              // errors_serv$ = e.response.data.errors;
               console.log(e.response.data);
             }
           })
