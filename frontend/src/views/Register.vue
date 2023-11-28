@@ -22,7 +22,7 @@
       const login_reg = helpers.regex(/^[a-zA-Z\d_]*$/)
       const latin = helpers.regex(/^.*(?=[a-zA-Z]).*$/)
       const has_int = helpers.regex(/^.*(?=.*\d).*$/)
-      const has_spec = helpers.regex(/^.*(?=.*[!@#$%^&*"?\(\)_-]).*$/)
+      const has_spec = helpers.regex(/^.*(?=.*[!@#$%^&*"?<>/'\(\)_-]).*$/)
 
       const checkLoginFree = (login) => {
         axios
