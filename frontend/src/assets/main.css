@@ -127,6 +127,10 @@ a,
   top: 0px;
   
 }
+
+.form_part > p{
+  color: white
+}
 .buttonHome{
   position: absolute;
   width: 35px;
@@ -136,7 +140,7 @@ a,
   
   background-color: #F3F2F8;
   visibility:visible;
-  background-image: url("./assets/domik.png");
+  background-image: url("./domik.png");
   background-repeat : no-repeat;
   background-position: center;
   border: none;
