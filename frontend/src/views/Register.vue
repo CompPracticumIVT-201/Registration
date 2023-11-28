@@ -147,7 +147,7 @@
         <label for="password">Пароль</label>
         <input placeholder="Придумайте свой пароль" class="form-control"
           id="password" 
-          type="password" 
+          type="password"
           v-model.trim="state.password" 
           @blur="v$.password.$touch()"
         />
@@ -197,7 +197,7 @@
       <button class="buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
         Зарегистрироваться
       </button>
-      <button class="buttonLogIn" type="submit" :disabled="v$.$invalid || !state.checkbox">
+      <button class="buttonLogIn" :disabled="v$.$invalid || !state.checkbox">
         Уже есть аккаунт? Войти
       </button>
     </form>
@@ -206,7 +206,6 @@
 
 
   <style scoped>
-
 
   .field {
     margin-bottom: 25px;
@@ -249,13 +248,6 @@
 .form-group input[type=password]{
     padding-left: 15px;
 }
-
-
-
-
-
-
-
 
   .checkbox{
     position:absolute;
@@ -369,7 +361,6 @@
   }
   .buttonReg:disabled,
   .buttonReg[disabled]{
-  border: 2px solid #365B76;
   background-color: #cccccc;
   color: #666666;
   }
@@ -393,7 +384,7 @@
     color: #F3F2F8;
   }
   .buttonLogIn:hover {
-    border: 2px solid #AF895B;
+    border: 1px solid #AF895B;
     background-color: #bd9462;
     padding: 5px 10px;
     cursor: pointer;
