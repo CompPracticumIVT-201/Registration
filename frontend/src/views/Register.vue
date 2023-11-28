@@ -19,7 +19,7 @@
         checkbox: '',
       })
 
-      const login_reg = helpers.regex(/^[a-zA-Z]*$/)
+      const login_reg = helpers.regex(/^[a-zA-Z\d_]*$/)
       const latin = helpers.regex(/^.*(?=[a-zA-Z]).*$/)
       const has_int = helpers.regex(/^.*(?=.*\d).*$/)
       const has_spec = helpers.regex(/^.*(?=.*[!@#$%^&*"?\(\)_-]).*$/)
@@ -36,9 +36,9 @@
         return {
           login: {
             required : helpers.withMessage('Введите логин!', required),
+            reg : helpers.withMessage('Логин содержит недопустимые символы!', login_reg),
             maxLength: helpers.withMessage('Длина логина должна быть не более 10 символов', maxLength(10)),
             minLength: helpers.withMessage('Длина логина должна быть не менее 3 символов', minLength(3)),
-            reg : helpers.withMessage('Логин должен содержать только латиницу, может содержать цифры и символ "_"', login_reg),
             // login_exist : helpers.withAsync(asyncValidator, () => state.login)
           },
           email: {
@@ -178,8 +178,11 @@
         
       </div>
 
-      <button class="button" type="submit" :disabled="v$.$invalid || !state.checkbox">
+      <button class="buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
         Зарегистрироваться
+      </button>
+      <button class="buttonLogIn" type="submit" :disabled="v$.$invalid || !state.checkbox">
+        Уже есть аккаунт? Войти
       </button>
     </form>
   </template>
@@ -193,8 +196,8 @@
   <style scoped>
 
   
-  .field {
-    margin-bottom: 23px;
+.field {
+    margin-bottom: 25px;
     position: relative;
     height: 55.08px;
 
@@ -203,10 +206,10 @@
   .field > label {
     position: absolute;
     height: 19px;
-    left: 14px;
-    top: 0px;
+    left: 30px;
+    top: -23px;
 
-    font-family: 'Inter';
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -216,14 +219,14 @@
   }
   .form-group > input {
     position: absolute;
-    height: 27.08px;
+    height: 32px;
     width: 343px;
-    top:20px;
+    top: 0px;
     left: 14px;
 
     background: #F3F2F8;
-    border: 1px solid #AF895B;
-    border-radius: 12px;
+    border: 2px solid #AF895B;
+    border-radius: 15px;
     box-sizing: border-box;
   }
 
@@ -235,52 +238,75 @@
     padding-left: 15px;
 }
 
+
+
+
+
+
+
+
   .checkbox{
-    position: absolute;
-    top:10px;
-    left: 14px;
+    position:absolute;
+    left: 25px;
+    top: -6px;
 
-    width: 15px;
-    height: 15px;
+    -webkit-appearance: none; /* Remove default appearance */
+    -moz-appearance: none;
+    appearance: none;
 
-  
+    width: 18px;
+    height: 18px;
+    border: 1px solid #AF895B;
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.3s ease-in-out;
 
-    background: #EDEDED;
-    border: 0.5px solid #DBDBDB;
-    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .checkbox:checked::before {
+    content: '\2714'; /* check mark symbol Unicode */
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    line-height: 16px;
+    color: #365B76;
+  }
+
+  .checkbox:checked{
+    background-color: #F3F2F8;  /* Change background color when checked */
 
   }
 
 
   .checkbox_field > label{
     position: absolute;
-    width: 300px;
+    width: 315px;
     height: 12px;
 
-    top: 7px;
-    left: 20px;
+    top: 1px;
+    left: 45px;
 
-    font-family: 'Inter';
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 10px;
+    font-size: 10.5px;
     line-height: 12px;
 
     color: #365B76;
   }
-  .checkbox_field > input{
-    top: 0px;
-  }
+  
 
 
   .form-group > input::placeholder{
     position: absolute;
-    width: 128px;
-    height: 14.9px;
-    top: 6.31px;
-    left: 15px;
+    width: 135px;
+    left: 4.37%;
+    right: 58.31%;
+    top: 32.14%;
+    bottom: 21.43%;
 
-    font-family: Inter;
+    font-family: sans-serif;
     font-size: 11px;
     font-weight: 300;
     line-height: 13px;
@@ -294,34 +320,70 @@
     position: absolute;
     color: #FC3030;
 
-    left: 15px;
-    top: 50px;
-
+    left: 30px;
+    top: 39px;
     height: 12px;
-    font-family: Inter;
-    font-size: 14px;
+    
+    font-family: sans-serif;
+    font-size: 12px;
     font-weight: 400;
     line-height: 12px;
     letter-spacing: 0em;
     text-align: left;
 
   }
-  .button{
+  .buttonReg{
     position: absolute;
-    top: 397px;
-    left: 37px;
+    top: 345px;
+    left: 45px;
     width: 271px;
     height: 40px;
-
+    border: none;
     background: #365B76;
     border-radius: 45px;
 
-    font-family: 'Inter';
+    font-family: sans-serif;;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
-    color: #FFFFFF;
+    color: #F3F2F8;
+  }
+  .buttonReg:hover {
+    border: 1px solid #365B76;
+    background-color: #3e6886;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .buttonReg:disabled,
+  .buttonReg[disabled]{
+  border: 2px solid #365B76;
+  background-color: #cccccc;
+  color: #666666;
+  }
 
+
+  .buttonLogIn{
+    position: absolute;
+    top: 410px;
+    left: 45px;
+    width: 271px;
+    height: 40px;
+    border: none;
+    background: #AF895B;
+    border-radius: 45px;
+    
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #F3F2F8;
+  }
+  .buttonLogIn:hover {
+    border: 2px solid #AF895B;
+    background-color: #bd9462;
+    padding: 5px 10px;
+    cursor: pointer;
   }
   </style>
