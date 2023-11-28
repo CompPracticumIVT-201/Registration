@@ -2,14 +2,12 @@
    import {reactive, computed} from 'vue'
    import {useVuelidate} from '@vuelidate/core'
    import { required, maxLength, minLength, email, sameAs, helpers } from '@vuelidate/validators'
-   //import moment from "moment";
    import axios from 'axios'
 
-
    export default {
-    //login: 'Register',
     
     setup(){
+
       const state = reactive({
         email: '',
         login: '',
@@ -19,10 +17,17 @@
       })
 
       const login_reg = helpers.regex(/^[a-zA-Z]*$/)
-      const pass = helpers.regex(/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*"?\(\)_-]).*$/)
       const latin = helpers.regex(/^.*(?=[a-zA-Z]).*$/)
       const has_int = helpers.regex(/^.*(?=.*\d).*$/)
       const has_spec = helpers.regex(/^.*(?=.*[!@#$%^&*"?\(\)_-]).*$/)
+
+      const checkLoginFree = (login) => {
+        axios
+          .get('/user/login/' + login)
+          .then(response => { return response.data.is_free })
+      }
+
+      const asyncValidator = helpers.withAsync(checkLoginFree, () => state.login) 
 
       const rules = computed(() => {
         return {
@@ -31,10 +36,12 @@
             maxLength: helpers.withMessage('Длина логина должна быть не более 10 символов', maxLength(10)),
             minLength: helpers.withMessage('Длина логина должна быть не менее 3 символов', minLength(3)),
             reg : helpers.withMessage('Логин должен содержать только латиницу, может содержать цифры и символ "_"', login_reg),
+            // login_exist : helpers.withAsync(asyncValidator, () => state.login)
           },
           email: {
             required : helpers.withMessage('Введите почту!', required),
             email : helpers.withMessage('Введите корректную почту!', email),
+            // email_exist : helpers.withMessage('Логин уже занят!', asyncEmailValidator),
           },
           password: {
             required : helpers.withMessage('Введите пароль!', required),
@@ -54,7 +61,6 @@
 
       return { state, v$ };
     },
-    
    
     methods: {
       async register() {
@@ -72,13 +78,10 @@
           })
           .catch((e) => {
             if( e.response.status == 422 ) {
-              // errors_serv$ = e.response.data.errors;
               console.log(e.response.data);
             }
           })
       },
-      async checkLoginExist() {},
-      async checkEmailExist() {},
       async getAuthors() {
         axios
           .get('/authors')
@@ -87,11 +90,13 @@
       async getCategories() {
         axios
           .get('/categories')
-          .then(response => {return response.data})
+          .then(response => { return response.data })
       },
     },
    };
    
+
+
    </script>
 
 <template>
@@ -105,7 +110,7 @@
           type="text" 
           v-model.trim="state.login" 
           @blur="v$.login.$touch()"
-        />
+        />     
         <div class="error" v-if="v$.login.$error">
           <div> 
             {{ v$.login.$errors[0].$message }} 
