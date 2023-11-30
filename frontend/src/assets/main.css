@@ -162,6 +162,7 @@ a,
   top:175px;
   border-radius: 40px;
 }
+
 .lamp_img img{
   visibility: visible;
   position: absolute;
@@ -170,6 +171,7 @@ a,
   left: 166px;
   top: 0px;
 }
+
 .form_part p{
   position: absolute;
   width: 196px;
@@ -191,6 +193,7 @@ a,
   text-align: left;
   color: #353232;
 }
+
 .form_part form{
   position: absolute;
   width: 343px;

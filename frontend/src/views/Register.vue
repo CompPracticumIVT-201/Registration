@@ -175,16 +175,18 @@
           v-model ="state.checkbox" 
           name ="checkbox"
         />
-        
       </div>
 
-      <button class="buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
-        Зарегистрироваться
-      </button>
-      <button class="buttonLogIn" type="submit" :disabled="v$.$invalid || !state.checkbox">
+        <button class="button buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
+          Зарегистрироваться
+        </button>
+    </form>
+
+    <a href="../Zaglushcki/enter.vue">
+      <button class="button buttonLogIn">
         Уже есть аккаунт? Войти
       </button>
-    </form>
+    </a>
   </template>
   
 
