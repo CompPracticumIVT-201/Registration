@@ -4,13 +4,14 @@
    import { required, maxLength, minLength, email, sameAs, helpers } from '@vuelidate/validators'
    //import moment from "moment";
    import axios from 'axios'
+   import '../assets/register.css'
+
+
 
 
    export default {
-    //login: 'Register',
-    
-    setup(){
 
+    setup(){
       const state = reactive({
         email: '',
         login: '',
@@ -22,15 +23,30 @@
       const login_reg = helpers.regex(/^[a-zA-Z\d_]*$/)
       const latin = helpers.regex(/^.*(?=[a-zA-Z]).*$/)
       const has_int = helpers.regex(/^.*(?=.*\d).*$/)
-      const has_spec = helpers.regex(/^.*(?=.*[!@#$%^&*"?<>/'\(\)_-]).*$/)
+      const has_spec = helpers.regex(/^.*(?=.*[!@#$%^&*"?\(\)_-]).*$/)
 
-      const checkLoginFree = (login) => {
-        axios
+      async function isLoginFree (login) {        
+        try {
+          const response = await axios
           .get('/user/login/' + login)
-          .then(response => { return response.data.is_free })
+          return response.data.is_free }
+        catch (e) {
+          return true
+        }
       }
 
-      const asyncValidator = helpers.withAsync(checkLoginFree, () => state.login) 
+      async function isEmailFree (email) {        
+        try {
+          const response = await axios
+          .get('/user/email/' + email)
+          return response.data.is_free }
+        catch (e) {
+          return true
+        }
+      }
+
+      const asyncValidLoginFree = helpers.withAsync(isLoginFree, () => state.login)
+      const asyncValidEmailFree = helpers.withAsync(isEmailFree, () => state.email)
 
       const rules = computed(() => {
         return {
@@ -39,12 +55,12 @@
             reg : helpers.withMessage('Логин содержит недопустимые символы!', login_reg),
             maxLength: helpers.withMessage('Длина логина должна быть не более 10 символов', maxLength(10)),
             minLength: helpers.withMessage('Длина логина должна быть не менее 3 символов', minLength(3)),
-            // login_exist : helpers.withAsync(asyncValidator, () => state.login)
+            login_exist: helpers.withMessage("Логин занят!", asyncValidLoginFree),
           },
           email: {
             required : helpers.withMessage('Введите почту!', required),
             email : helpers.withMessage('Введите корректную почту!', email),
-            // email_exist : helpers.withMessage('Логин уже занят!', asyncEmailValidator),
+            email_exist : helpers.withMessage('Почта уже используется!', asyncValidEmailFree),
           },
           password: {
             required : helpers.withMessage('Введите пароль!', required),
@@ -72,19 +88,18 @@
           login: this.state.login,
           password: this.state.password,
           password_confirmation: this.state.copy_password,
-        };
+        };  
         
-        axios
-          .post('/register', user)
-          .then(response => {
-            console.log (response.data.status);
-          })
-          .catch((e) => {
-            if( e.response.status == 422 ) {
-              // errors_serv$ = e.response.data.errors;
-              console.log(e.response.data);
-            }
-          })
+        try {
+          const response = await axios
+            .post('/register', user)
+          if (response.status == 201)
+            alert("registration succesfull")
+        }
+        catch (e) {
+          if (e.response.status == 422) 
+            alert(JSON.stringify(e.response.data.errors))
+        }
       },
       async getAuthors() {
         axios
@@ -98,10 +113,9 @@
       },
     },
    };
-   
 
+  </script>
 
-   </script>
 
 <template>
     
@@ -112,7 +126,7 @@
         <input placeholder="Придумайте логин" class="form-control"
           id="login" 
           type="text" 
-          v-model.trim="state.login" 
+          v-model="state.login" 
           @blur="v$.login.$touch()"
         />     
         <div class="error" v-if="v$.login.$error">
@@ -175,215 +189,18 @@
           v-model ="state.checkbox" 
           name ="checkbox"
         />
-        
       </div>
 
-      <button class="buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
+      <button class="button buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
         Зарегистрироваться
       </button>
-      <button class="buttonLogIn" type="submit" :disabled="v$.$invalid || !state.checkbox">
+    </form>
+
+    <a href="../Zaglushcki/enter.vue">
+      <button class="button buttonLogIn">
         Уже есть аккаунт? Войти
       </button>
-    </form>
+    </a>
   </template>
   
 
-
-  
-   
-  
-  
-  <style scoped>
-
-  
-.field {
-    margin-bottom: 25px;
-    position: relative;
-    height: 55.08px;
-
-  }
-  
-  .field > label {
-    position: absolute;
-    height: 19px;
-    left: 30px;
-    top: -23px;
-
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-
-    color: #000000;  
-  }
-  .form-group > input {
-    position: absolute;
-    height: 32px;
-    width: 343px;
-    top: 0px;
-    left: 14px;
-
-    background: #F3F2F8;
-    border: 2px solid #AF895B;
-    border-radius: 15px;
-    box-sizing: border-box;
-  }
-
-
-  .form-group input[type=text]{
-    padding-left: 15px;
-}
-.form-group input[type=password]{
-    padding-left: 15px;
-}
-
-
-
-
-
-
-
-
-  .checkbox{
-    position:absolute;
-    left: 25px;
-    top: -6px;
-
-    -webkit-appearance: none; /* Remove default appearance */
-    -moz-appearance: none;
-    appearance: none;
-
-    width: 18px;
-    height: 18px;
-    border: 1px solid #AF895B;
-    border-radius: 4px;
-    outline: none;
-    transition: background-color 0.3s ease-in-out;
-
-    cursor: pointer;
-  }
-
-  .checkbox:checked::before {
-    content: '\2714'; /* check mark symbol Unicode */
-    display: block;
-    text-align: center;
-    font-size: 14px;
-    line-height: 16px;
-    color: #365B76;
-  }
-
-  .checkbox:checked{
-    background-color: #F3F2F8;  /* Change background color when checked */
-
-  }
-
-
-  .checkbox_field > label{
-    position: absolute;
-    width: 315px;
-    height: 12px;
-
-    top: 1px;
-    left: 45px;
-
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 10.5px;
-    line-height: 12px;
-
-    color: #365B76;
-  }
-  
-
-
-  .form-group > input::placeholder{
-    position: absolute;
-    width: 135px;
-    left: 4.37%;
-    right: 58.31%;
-    top: 32.14%;
-    bottom: 21.43%;
-
-    font-family: sans-serif;
-    font-size: 11px;
-    font-weight: 300;
-    line-height: 13px;
-    letter-spacing: 0em;
-    text-align: left;
-
-    color:#B5B5B5;
-
-  }
-  .error {
-    position: absolute;
-    color: #FC3030;
-
-    left: 30px;
-    top: 39px;
-    height: 12px;
-    
-    font-family: sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 12px;
-    letter-spacing: 0em;
-    text-align: left;
-
-  }
-  .buttonReg{
-    position: absolute;
-    top: 345px;
-    left: 45px;
-    width: 271px;
-    height: 40px;
-    border: none;
-    background: #365B76;
-    border-radius: 45px;
-
-    font-family: sans-serif;;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    color: #F3F2F8;
-  }
-  .buttonReg:hover {
-    border: 1px solid #365B76;
-    background-color: #3e6886;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  .buttonReg:disabled,
-  .buttonReg[disabled]{
-  border: 2px solid #365B76;
-  background-color: #cccccc;
-  color: #666666;
-  }
-
-
-  .buttonLogIn{
-    position: absolute;
-    top: 410px;
-    left: 45px;
-    width: 271px;
-    height: 40px;
-    border: none;
-    background: #AF895B;
-    border-radius: 45px;
-    
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    color: #F3F2F8;
-  }
-  .buttonLogIn:hover {
-    border: 2px solid #AF895B;
-    background-color: #bd9462;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  </style>

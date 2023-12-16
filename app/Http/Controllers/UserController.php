@@ -19,5 +19,8 @@ class UserController extends User
             return response()->json([
                 'is_free' => !User::where("email", "=", $email)->exists(),
             ]);
+        else return response()->json([
+            'is_free' => false,
+        ]);
     }
 }

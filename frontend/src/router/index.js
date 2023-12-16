@@ -22,6 +22,11 @@ const router = createRouter({
       name: 'Register',
       component: () => import('../views/Register.vue')
     },
+    {
+      path: '/landing',
+      name: 'Landing',
+      component: () => import('../Zaglushcki/Landing.vue')
+    },
   ]
 })
 export default router

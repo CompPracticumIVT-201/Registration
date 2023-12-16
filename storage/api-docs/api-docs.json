@@ -217,12 +217,12 @@
                     "birthday": {
                         "description": "Author birthday",
                         "type": "date-time",
-                        "example": "1963-05-15 14:32:00"
+                        "example": "1963-05-15"
                     },
                     "day_death": {
                         "description": "Author day death",
                         "type": "date-time",
-                        "example": "2012-11-16 17:15:00"
+                        "example": "2012-11-16"
                     }
                 },
                 "type": "object",
@@ -303,7 +303,7 @@
                     "birthday": {
                         "description": "Author birthday",
                         "type": "date-time",
-                        "example": "1963-05-15 14:32:00"
+                        "example": "1963-05-15"
                     },
                     "phone_number": {
                         "description": "User phone number",

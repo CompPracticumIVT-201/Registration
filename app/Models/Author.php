@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 *       @OA\Property(property="name", type="string", description="Author name", example="Roderick"),
 *       @OA\Property(property="secondary_name", type="string", description="Author secondary name", example="Ruecker"),
 *       @OA\Property(property="surname", type="string", description="Author surname", example="Abbott"),
-*       @OA\Property(property="birthday", type="date-time", description="Author birthday", example="1963-05-15 14:32:00"),
-*       @OA\Property(property="day_death", type="date-time", description="Author day death", example="2012-11-16 17:15:00"),
+*       @OA\Property(property="birthday", type="date-time", description="Author birthday", example="1963-05-15"),
+*       @OA\Property(property="day_death", type="date-time", description="Author day death", example="2012-11-16"),
 *   )
 */
 
