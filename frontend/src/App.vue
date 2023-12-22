@@ -6,9 +6,6 @@ import './assets/main.css'
 <script>
 export default {
   name: 'App',
-
-  
-
   mounted(){
     // var title = this.$route.name
     document.title = "Регистрация"
@@ -25,7 +22,7 @@ export default {
       <div class= "bgElepseRightBottom"></div>
 
       <div class = "register_form">
-        <div class ="book_part">
+        <div class ="book_part" @click="$router.push('../Zaglushcki/enter.vue')">
           <a href="" class="buttonHome"/>
           
           <div class= "book_img">

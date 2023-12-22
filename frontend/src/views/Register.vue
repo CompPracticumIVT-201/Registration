@@ -183,8 +183,8 @@
 
       <div class="field checkbox_field">
         <label for="checkbox">Я согласен(а)</label>
-        <div class="PoPD">
-          <a href="../Zaglushcki/enter.vue" >с условиями обработки персональных данных</a>
+        <div class="PoPD" @click="$router.push('../Zaglushcki/enter.vue')">
+          <a href="" >с условиями обработки персональных данных</a>
         </div>
         <input class="checkbox"
           id="checkbox" 
@@ -194,14 +194,12 @@
         />
       </div>
 
-      <button class="button buttonReg" type="submit" :disabled="v$.$invalid || !state.checkbox">
+      <button class="button buttonReg" @click="$router.push('../Zaglushcki/enter.vue')" type="submit" :disabled="v$.$invalid || !state.checkbox" >
         Зарегистрироваться
       </button>
     </form>
-    <div class="login">
-      <a href="../Zaglushcki/enter.vue" >Уже есть аккаунт? Войти</a>
+    <div class="login" @click="$router.push('../Zaglushcki/enter.vue')">
+      <a href="" >Уже есть аккаунт? Войти</a>
     </div>
     
   </template>
-  
-
