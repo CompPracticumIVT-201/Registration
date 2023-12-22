@@ -12,7 +12,7 @@ export default {
   mounted(){
     // var title = this.$route.name
     document.title = "Регистрация"
-  },
+  }
 }
 </script>
 <template>

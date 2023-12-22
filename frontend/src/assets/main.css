@@ -8,19 +8,6 @@
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
 @media (min-width: 1024px) {
   body {
     display: flex;
@@ -133,10 +120,11 @@ a,
 }
 .buttonHome{
   position: absolute;
-  width: 35px;
-  height: 35px;
+  width: 45px;
+  height: 45px;
   top: 25px;
   left: 25px;
+
   
   background-color: #F3F2F8;
   visibility:visible;

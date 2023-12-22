@@ -90,7 +90,7 @@
 .checkbox{
   position:absolute;
   left: 25px;
-  top: -6px;
+  top: -1px;
 
   -webkit-appearance: none; /* Remove default appearance */
   -moz-appearance: none;
@@ -124,8 +124,8 @@
   width: 315px;
   height: 12px;
 
-  top: -2px;
-  left: 43px;
+  top: 5px;
+  left: -70px;
 
   font-family: sans-serif;
   font-style: normal;
@@ -133,7 +133,37 @@
   font-size: 10.5px;
   line-height: 12px;
 
-  color: #000000;
+  color: #365B76;
+}
+.PoPD{
+  position: absolute;
+  width: 315px;
+  height: 12px;
+
+  top: 5px;
+  left: 80px;
+
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10.5px;
+  line-height: 12px;
+
+  color: #365B76;
+}
+
+.PoPD a{
+  color: #365B76;
+  text-decoration: none;
+}
+
+.PoPD a:link{
+  border-bottom: 1px solid; 
+}
+
+.PoPD a:hover {
+  background-color: #F3F2F8;
+  border-bottom: 1px solid;
 }
 
 .form-group > input::placeholder{
@@ -152,7 +182,6 @@
   text-align: left;
 
   color:#B5B5B5;
-
 }
 
 .error {
@@ -169,7 +198,6 @@
   line-height: 12px;
   letter-spacing: 0em;
   text-align: left;
-
 }
 
 .button{
@@ -190,29 +218,50 @@ button:hover{
   padding: 5px 10px;
   cursor: pointer;
 }
+
 .buttonReg{
-  top: 345px;
+  top: 370px;
   left: 45px;
   background: #365B76;
 }
+
 .buttonReg:hover {
   border: 1px solid #365B76;
   background-color: #3e6886;
 }
+
 .buttonReg:disabled,
 .buttonReg[disabled]{
   background-color: #cccccc;
   color: #666666;
 }
 
-.buttonLogIn{
+.login{
+  position: absolute;
+  top: 560px;
+  left: 155px;
+
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
   
-  top: 545px;
-  left: 118px;
-  background: #AF895B;
 }
-.buttonLogIn:hover {
-  border: 1px solid #AF895B;
-  background-color: #bd9462;
-  
+
+.login a{
+  color: #AF895B; 
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.login a:link {
+  color: #AF895B; 
+  border-bottom: 1px solid; 
+}
+
+.login a:hover {
+  background-color: #F3F2F8;
+  color: #bd9462;
+  border-bottom: .07em solid;
 }

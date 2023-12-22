@@ -182,7 +182,10 @@
       </div>
 
       <div class="field checkbox_field">
-        <label for="checkbox">Я согласен(а) с условиями обработки персональных данных</label>
+        <label for="checkbox">Я согласен(а)</label>
+        <div class="PoPD">
+          <a href="../Zaglushcki/enter.vue" >с условиями обработки персональных данных</a>
+        </div>
         <input class="checkbox"
           id="checkbox" 
           type ="checkbox" 
@@ -195,12 +198,10 @@
         Зарегистрироваться
       </button>
     </form>
-
-    <a href="../Zaglushcki/enter.vue">
-      <button class="button buttonLogIn">
-        Уже есть аккаунт? Войти
-      </button>
-    </a>
+    <div class="login">
+      <a href="../Zaglushcki/enter.vue" >Уже есть аккаунт? Войти</a>
+    </div>
+    
   </template>
   
 
